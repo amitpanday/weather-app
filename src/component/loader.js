@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import LottieView from 'lottie-react-native';
 
-export default loader = () => {
-    return (
-        <View>
-            <Text>Loader</Text>
-        </View>
-    )
+export default loader = ({ isVisiable }) => {
+    if (isVisiable) {
+        return (<LottieView source={require('../assets/animation.json')} autoPlay loop />)
+    } else {
+        return null;
+    }
 }

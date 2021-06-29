@@ -10,8 +10,13 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "lottie-ios": "^3.1.8",
+    "lottie-react-native": "^4.0.2",
     "react": "17.0.1",
-    "react-native": "0.64.2"
+    "react-native": "0.64.2",
+    "react-redux": "^7.2.4",
+    "redux": "^4.1.0",
+    "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

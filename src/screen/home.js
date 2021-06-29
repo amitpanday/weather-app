@@ -15,7 +15,7 @@ class Home extends React.Component {
         return (
             <View style={styles.container}>
                 <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator>
-                    {/* <Loader visiable={true} /> */}
+                    <Loader isVisiable={true} />
                     {/* <View style={styles.errorContainer}>
                         <Text style={styles.errorText}>{`Something Went \nWrong at our \nEnd`}</Text>
                         <TouchableOpacity onPress={() => { console.log('retry click') }} style={styles.errorButton}>

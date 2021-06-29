@@ -11,6 +11,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		6372DB44268BAA7800A14B22 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6372DB43268BAA7800A14B22 /* File.swift */; };
 		7FE14C4FCDD84E8686DFCE37 /* libPods-weather.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FEBCF18FD30CBFBA6DD25969 /* libPods-weather.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8633F22C65220F7E9EC56AAA /* libPods-weather-weatherTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 33A64C22F13E25AAD6361F23 /* libPods-weather-weatherTests.a */; };
@@ -39,6 +40,8 @@
 		1FEC539D0FF4C614CDF5F217 /* Pods-weather.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-weather.release.xcconfig"; path = "Target Support Files/Pods-weather/Pods-weather.release.xcconfig"; sourceTree = "<group>"; };
 		26C998E6C327BC063607CE05 /* Pods-weather-weatherTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-weather-weatherTests.release.xcconfig"; path = "Target Support Files/Pods-weather-weatherTests/Pods-weather-weatherTests.release.xcconfig"; sourceTree = "<group>"; };
 		33A64C22F13E25AAD6361F23 /* libPods-weather-weatherTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-weather-weatherTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6372DB42268BAA7700A14B22 /* weather-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "weather-Bridging-Header.h"; sourceTree = "<group>"; };
+		6372DB43268BAA7800A14B22 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
 		7E81B21D6FB2682B8E7361D3 /* Pods-weather-weatherTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-weather-weatherTests.debug.xcconfig"; path = "Target Support Files/Pods-weather-weatherTests/Pods-weather-weatherTests.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = weather/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9427616BD68E0EF10E843898 /* Pods-weather.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-weather.debug.xcconfig"; path = "Target Support Files/Pods-weather/Pods-weather.debug.xcconfig"; sourceTree = "<group>"; };
@@ -127,12 +130,14 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				6372DB43268BAA7800A14B22 /* File.swift */,
 				13B07FAE1A68108700A75B9A /* weather */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* weatherTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				1251B1DACFA38FEE4A69D79B /* Pods */,
+				6372DB42268BAA7700A14B22 /* weather-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -207,7 +212,7 @@
 						TestTargetID = 13B07F861A680F5B00A75B9A;
 					};
 					13B07F861A680F5B00A75B9A = {
-						LastSwiftMigration = 1120;
+						LastSwiftMigration = 1230;
 					};
 				};
 			};
@@ -411,6 +416,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
+				6372DB44268BAA7800A14B22 /* File.swift in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -499,6 +505,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = weather;
+				SWIFT_OBJC_BRIDGING_HEADER = "weather-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -525,6 +532,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = weather;
+				SWIFT_OBJC_BRIDGING_HEADER = "weather-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
