@@ -2,6 +2,13 @@ import { create } from 'apisauce';
 import apiPath from '../../../lib/apiPath';
 import { API_KEY } from '../../../utlis/config';
 
+var dayForecast = [
+    { day: '', dayTemp: null },
+    { day: '', dayTemp: null },
+    { day: '', dayTemp: null },
+    { day: '', dayTemp: null },
+    { day: '', dayTemp: null }
+]
 
 const forecast = {
 
@@ -10,14 +17,14 @@ const forecast = {
 
         return dispatch => {
             api
-                .get(`/?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`)
+                .get(`/?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`)
                 .then(response => response.data)
                 .then((result) => {
-                    // console.log('getCurrentForecast =>', result);
+                    console.log('getCurrentForecast =>', result);
                     dispatch({
                         type: 'getCurrentForecast',
                         data: result,
-                        error: false,
+                        error: result.cod != 200 ? true : false,
                         loading: false
                     });
                 })
@@ -29,16 +36,22 @@ const forecast = {
 
         return dispatch => {
             api
-                .get(`/?lat=${latitude}&lon=${longitude}&appid=${API_KEY}`)
+                .get(`/?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`)
                 .then(response => response.data)
                 .then((result) => {
                     // console.log('getFutureForecast =>', result);
-                    dispatch({
-                        type: 'getFutureForecast',
-                        data: result,
-                        error: false,
-                        loading: false
-                    });
+                    for (let i = 0, j = 0; i <= 4; i++, j = j + 8) {
+                        dayForecast[i].day = result.list[j].dt_txt.slice(0, 10);
+                        dayForecast[i].dayTemp = result.list[j].main.temp;
+                    }
+                    setTimeout(() => {
+                        dispatch({
+                            type: 'getFutureForecast',
+                            data: dayForecast,
+                            error: result.cod != 200 ? true : false,
+                            loading: false
+                        });
+                    }, 1000)
                 })
         }
     }

@@ -17,43 +17,75 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-        const { ForecastAction, CurrentForecastData, FutureForecastData } = this.props;
+        const { ForecastAction } = this.props;
         const latitude = '25.594095';
         const longitude = '85.137566';
         ForecastAction.getCurrentForecast(latitude, longitude);
         ForecastAction.getFutureForecast(latitude, longitude);
     }
 
+    getForecastData = () => {
+        const { ForecastAction } = this.props;
+        const latitude = '25.594095';
+        const longitude = '85.137566';
+
+        ForecastAction.getCurrentForecast(latitude, longitude);
+
+        ForecastAction.getFutureForecast(latitude, longitude);
+    }
+
     render() {
+        const { CurrentForecastData, FutureForecastData } = this.props;
+        console.log(JSON.stringify(FutureForecastData));
         return (
             <View style={styles.container}>
                 <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator>
-                    <Loader isVisiable={false} />
-                    {/* <View style={styles.errorContainer}>
-                        <Text style={styles.errorText}>{`Something Went \nWrong at our \nEnd`}</Text>
-                        <TouchableOpacity onPress={() => { console.log('retry click') }} style={styles.errorButton}>
-                            <Text style={styles.buttonText}>RETRY</Text>
-                        </TouchableOpacity>
-                    </View> */}
-                    <View style={styles.upperContainer}>
-                        <Text style={styles.numberText1}>10</Text>
-                        <Text style={styles.text1}>Delhi</Text>
-                    </View>
-                    <View style={styles.buttomContainer}>
-                        {/* {[{}, {}, {}, {}, {}].map((item, index) => {
-                            return (
-                                <View style={styles.buttomRow}>
-                                    <Text style={styles.text2}>Monday</Text>
-                                    <Text style={styles.numberText2}>8</Text>
+                    <Loader isVisiable={CurrentForecastData.loading} />
+                    {CurrentForecastData.error || FutureForecastData.error ? (
+                        <View style={styles.errorContainer}>
+                            <Text style={styles.errorText}>{`Something Went \nWrong at our \nEnd`}</Text>
+                            <TouchableOpacity onPress={() => this.getForecastData()} style={styles.errorButton}>
+                                <Text style={styles.buttonText}>RETRY</Text>
+                            </TouchableOpacity>
+                        </View>
+                    ) : null}
+                    {!CurrentForecastData.loading ? (
+                        <>
+                            <View style={styles.upperContainer}>
+                                <View style={{ flexDirection: 'row', paddingLeft: 35 }}>
+                                    <Text style={styles.numberText1}>
+                                        {Math.round(parseFloat(CurrentForecastData.data.main.temp))}
+                                    </Text>
+                                    <Text style={{ fontSize: 20, color: 'white', fontWeight: '600' }}>0</Text>
                                 </View>
-                            )
-                        })} */}
-                    </View>
+                                <Text style={styles.text1}>
+                                    {CurrentForecastData.data.name}
+                                </Text>
+                            </View>
+                            {!FutureForecastData.loading ? (
+                                <View style={styles.buttomContainer}>
+                                    {FutureForecastData.data.map((item, index) => {
+                                        return (
+                                            <View key={index} style={styles.buttomRow}>
+                                                <Text style={styles.text2}>
+                                                    {new Date(item.day).toTimeString()}
+                                                </Text>
+                                                <Text style={styles.numberText2}>
+                                                    {Math.round(parseFloat(item.dayTemp))}
+                                                </Text>
+                                            </View>
+                                        )
+                                    })}
+                                </View>
+                            ) : null}
+                        </>
+                    ) : null}
                 </ScrollView>
             </View>
         );
     }
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -90,7 +122,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     numberText1: {
-        fontSize: 112,
+        fontSize: 100,
         fontWeight: '500',
         color: '#fff'
     },
