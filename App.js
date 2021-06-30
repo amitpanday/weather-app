@@ -8,13 +8,17 @@
 
 import React from 'react';
 import { SafeAreaView } from 'react-native';
+import { Provider } from 'react-redux'
+import store from './src/store';
 
 import AppContainer from './src/screen/home';
 
 export default App = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <AppContainer />
+      <Provider store={store}>
+        <AppContainer />
+      </Provider>
     </SafeAreaView>
   );
 };

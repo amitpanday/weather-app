@@ -1,6 +1,11 @@
 import React from 'react';
 import { View, Text, Dimensions, TouchableOpacity, ScrollView, StyleSheet } from 'react-native'
+import { create } from 'apisauce';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
 import Loader from '../component/loader';
+import actions from '../store/actions/';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -11,11 +16,19 @@ class Home extends React.Component {
         super(props);
     }
 
+    componentDidMount() {
+        const { ForecastAction, CurrentForecastData, FutureForecastData } = this.props;
+        const latitude = '25.594095';
+        const longitude = '85.137566';
+        ForecastAction.getCurrentForecast(latitude, longitude);
+        ForecastAction.getFutureForecast(latitude, longitude);
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator>
-                    <Loader isVisiable={true} />
+                    <Loader isVisiable={false} />
                     {/* <View style={styles.errorContainer}>
                         <Text style={styles.errorText}>{`Something Went \nWrong at our \nEnd`}</Text>
                         <TouchableOpacity onPress={() => { console.log('retry click') }} style={styles.errorButton}>
@@ -27,14 +40,14 @@ class Home extends React.Component {
                         <Text style={styles.text1}>Delhi</Text>
                     </View>
                     <View style={styles.buttomContainer}>
-                        {[{}, {}, {}, {}, {}].map((item, index) => {
+                        {/* {[{}, {}, {}, {}, {}].map((item, index) => {
                             return (
                                 <View style={styles.buttomRow}>
                                     <Text style={styles.text2}>Monday</Text>
                                     <Text style={styles.numberText2}>8</Text>
                                 </View>
                             )
-                        })}
+                        })} */}
                     </View>
                 </ScrollView>
             </View>
@@ -112,5 +125,19 @@ const styles = StyleSheet.create({
         marginTop: 80
     }
 });
+const mapStateToProps = state => {
 
-export default Home;
+    return {
+        CurrentForecastData: state.CurrentForecast,
+        FutureForecastData: state.FutureForecast
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+
+    return {
+        ForecastAction: bindActionCreators(actions.Forecast, dispatch),
+    };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -10,6 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "apisauce": "^2.1.1",
     "lottie-ios": "^3.1.8",
     "lottie-react-native": "^4.0.2",
     "react": "17.0.1",
