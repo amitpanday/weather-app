@@ -1,13 +1,13 @@
-## Weather App
+# Weather App
 It is a React native weather app which forecast current and next 5 days weather.
 
-# App Feature
+## App Feature
 
 - Takes the user device location from ```GPS```.
 - Shows current day and 5 days ``temprature`` in Celsius format.
 - No ```background``` process and no battery draining.
 
-# Available Scripts
+## Available Scripts
 
 In the project directory, you can run:
 
@@ -69,12 +69,12 @@ See the section about deployment for [more information](https://reactnative.dev/
 
 For IOS Release Build check [here](https://reactnative.dev/docs/publishing-to-app-store)
 
-# Learn More
+## Learn More
 
 You can learn more in the [Ract-Native CLI](https://reactnative.dev/docs/environment-setup).
 
 To learn React Native, check out the [React-Native documentation](https://reactnative.dev/).
 
-# Screen Shot
+## Screen Shot
 ![](https://github.com/amitpanday/weather-app/blob/master/screenshot/error.png?raw=true|width=10)
 ![](https://github.com/amitpanday/weather-app/blob/master/screenshot/home.png?raw=true)
