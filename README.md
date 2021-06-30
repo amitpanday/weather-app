@@ -11,11 +11,15 @@ It is a React native weather app which forecast current and next 5 days weather.
 
 In the project directory, you can run:
 
-```npx npm install```
+```
+npx npm install
+```
 
 for ios
 
-```npx pod install```
+```
+npx pod install
+```
 
 Now run Development server.
 
@@ -27,17 +31,23 @@ Add local.properties with your sdk path for android [more](https://medium.com/@l
 
 Setup your emulator aur physical Devices, [for android](https://reactnative.dev/docs/environment-setup), [for ios](https://reactnative.dev/docs/running-on-simulator-ios)
 
-``` npx react-native run-android ```
+``` 
+npx react-native run-android 
+```
 
 For ios
 
-``` npx react-native run-android --variant="iPhone 11 Pro Max"```
+``` 
+npx react-native run-android --variant="iPhone 11 Pro Max"
+```
 
 The screen will reload if you make edits.
 
 You will also see any errors in the device screen.
 
-```npx react-native test```
+```
+npx react-native test
+```
 
 Launches the test runner in the interactive watch mode.
 
@@ -45,7 +55,9 @@ See the section about [running tests](https://reactnative.dev/docs/testing-overv
 
 For Android Production Build
 
-```react-native run-android  --variant=release``` 
+```
+react-native run-android  --variant=release
+``` 
 
 Builds the app for production testing apk.
 
@@ -64,3 +76,5 @@ You can learn more in the [Ract-Native CLI](https://reactnative.dev/docs/environ
 To learn React Native, check out the [React-Native documentation](https://reactnative.dev/).
 
 # Screen Shot
+![](https://github.com/amitpanday/weather-app/blob/master/screenshot/error.png?raw=true|width=10)
+![](https://github.com/amitpanday/weather-app/blob/master/screenshot/home.png?raw=true)
