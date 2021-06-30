@@ -1,11 +1,13 @@
 import React from 'react';
-import { View, Text, Dimensions, TouchableOpacity, ScrollView, StyleSheet } from 'react-native'
-import { create } from 'apisauce';
+import { View, Text, Dimensions, TouchableOpacity, ScrollView, RefreshControl, StyleSheet } from 'react-native'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import moment from 'moment';
+import Geolocation from '@react-native-community/geolocation';
 
 import Loader from '../component/loader';
 import actions from '../store/actions/';
+import { getFontSize, dynamicSize } from '../utlis/responsive';
 
 const { width, height } = Dimensions.get('screen');
 
@@ -14,33 +16,56 @@ const { width, height } = Dimensions.get('screen');
 class Home extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            latitude: null,
+            longitude: null,
+            refreshing: false
+        }
     }
 
     componentDidMount() {
-        const { ForecastAction } = this.props;
-        const latitude = '25.594095';
-        const longitude = '85.137566';
-        ForecastAction.getCurrentForecast(latitude, longitude);
-        ForecastAction.getFutureForecast(latitude, longitude);
+        this.getCorrentLocation();
+    }
+
+    getCorrentLocation = () => {
+        try {
+            Geolocation.getCurrentPosition(userLocation => {
+                const { latitude, longitude } = userLocation.coords;
+                this.setState({ latitude, longitude }, this.getForecastData)
+            }, (error) => console.log(error),
+                { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 });
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     getForecastData = () => {
         const { ForecastAction } = this.props;
-        const latitude = '25.594095';
-        const longitude = '85.137566';
+        const { latitude, longitude } = this.state;
 
         ForecastAction.getCurrentForecast(latitude, longitude);
 
         ForecastAction.getFutureForecast(latitude, longitude);
+
+        setTimeout(() => {
+            this.setState({ refreshing: false });
+        }, 1000)
     }
 
     render() {
         const { CurrentForecastData, FutureForecastData } = this.props;
-        console.log(JSON.stringify(FutureForecastData));
         return (
             <View style={styles.container}>
-                <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator>
-                    <Loader isVisiable={CurrentForecastData.loading} />
+                <Loader isVisiable={CurrentForecastData.loading} />
+                <ScrollView
+                    horizontal={false}
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={this.state.refreshing}
+                            onRefresh={this.getForecastData}
+                        />
+                    }
+                    style={{ flex: 1 }} showsVerticalScrollIndicator>
                     {CurrentForecastData.error || FutureForecastData.error ? (
                         <View style={styles.errorContainer}>
                             <Text style={styles.errorText}>{`Something Went \nWrong at our \nEnd`}</Text>
@@ -52,11 +77,13 @@ class Home extends React.Component {
                     {!CurrentForecastData.loading ? (
                         <>
                             <View style={styles.upperContainer}>
-                                <View style={{ flexDirection: 'row', paddingLeft: 35 }}>
-                                    <Text style={styles.numberText1}>
+                                <Text style={styles.numberText1}>Today</Text>
+                                <View style={{ flexDirection: 'row' }}>
+                                    <Text style={{ ...styles.numberText1, fontSize: getFontSize(80) }}>
                                         {Math.round(parseFloat(CurrentForecastData.data.main.temp))}
                                     </Text>
-                                    <Text style={{ fontSize: 20, color: 'white', fontWeight: '600' }}>0</Text>
+                                    <Text style={{ paddingTop: dynamicSize(14), fontSize: getFontSize(20), color: 'white', fontWeight: '600' }}>0</Text>
+                                    <Text style={{ ...styles.numberText1, fontSize: getFontSize(80) }}>C</Text>
                                 </View>
                                 <Text style={styles.text1}>
                                     {CurrentForecastData.data.name}
@@ -68,11 +95,15 @@ class Home extends React.Component {
                                         return (
                                             <View key={index} style={styles.buttomRow}>
                                                 <Text style={styles.text2}>
-                                                    {new Date(item.day).toTimeString()}
+                                                    {moment(item.day).format('dddd')}
                                                 </Text>
-                                                <Text style={styles.numberText2}>
-                                                    {Math.round(parseFloat(item.dayTemp))}
-                                                </Text>
+                                                <View style={{ flexDirection: 'row' }}>
+                                                    <Text style={styles.numberText2}>
+                                                        {Math.round(parseFloat(item.dayTemp))}
+                                                    </Text>
+                                                    <Text style={{ ...styles.numberText2, fontSize: getFontSize(12) }}>0</Text>
+                                                    <Text style={styles.numberText2}>C</Text>
+                                                </View>
                                             </View>
                                         )
                                     })}
@@ -81,7 +112,7 @@ class Home extends React.Component {
                         </>
                     ) : null}
                 </ScrollView>
-            </View>
+            </View >
         );
     }
 }
@@ -99,21 +130,21 @@ const styles = StyleSheet.create({
     },
     errorText: {
         textAlign: 'center',
-        fontSize: 50,
+        fontSize: getFontSize(50),
         fontWeight: '400',
         color: '#fff'
     },
     errorButton: {
-        width: 100,
-        height: 45,
+        width: dynamicSize(100),
+        height: dynamicSize(45),
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 50,
+        marginTop: dynamicSize(50),
         borderRadius: 10,
         backgroundColor: '#ed2602'
     },
     buttonText: {
-        fontSize: 18,
+        fontSize: getFontSize(18),
         color: '#fff'
     },
     upperContainer: {
@@ -122,39 +153,41 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     numberText1: {
-        fontSize: 100,
-        fontWeight: '500',
+        fontSize: getFontSize(90),
+        fontWeight: '400',
         color: '#fff'
     },
     numberText2: {
-        fontSize: 22,
+        fontSize: getFontSize(22),
         fontWeight: '400',
-        color: '#fff'
+        color: '#000'
     },
     text1: {
         fontWeight: '400',
-        fontSize: 40,
+        fontSize: getFontSize(40),
         color: '#fff'
     },
     text2: {
-        fontSize: 22,
+        fontSize: getFontSize(22),
         fontWeight: '400',
-        color: '#fff'
+        color: '#000'
     },
     buttomRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        width: width,
-        height: 45,
-        paddingHorizontal: 20,
+        width: width - 50,
+        height: dynamicSize(45),
+        marginLeft: dynamicSize(25),
+        paddingHorizontal: dynamicSize(20),
         alignItems: 'center',
-        borderTopColor: '#ddd',
-        borderTopWidth: 1,
-        paddingRight: 50
+        paddingRight: dynamicSize(20),
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        marginVertical: dynamicSize(5)
     },
     buttomContainer: {
         height: height / 2,
-        marginTop: 80
+        marginTop: dynamicSize(15)
     }
 });
 const mapStateToProps = state => {

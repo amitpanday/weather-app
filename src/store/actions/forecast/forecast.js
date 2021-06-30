@@ -39,7 +39,6 @@ const forecast = {
                 .get(`/?lat=${latitude}&lon=${longitude}&appid=${API_KEY}&units=metric`)
                 .then(response => response.data)
                 .then((result) => {
-                    // console.log('getFutureForecast =>', result);
                     for (let i = 0, j = 0; i <= 4; i++, j = j + 8) {
                         dayForecast[i].day = result.list[j].dt_txt.slice(0, 10);
                         dayForecast[i].dayTemp = result.list[j].main.temp;
